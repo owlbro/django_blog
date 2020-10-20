@@ -7,73 +7,71 @@
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
             <p>{{ post.text| truncatechars:200 }}</p>
             <div class="date">
-                {{ post.published_date }}
+                {{ post.published_date }}, {{ post.author }}
             </div>
         </div>
     {% endfor %}
 
-    <nav aria-label="Page">    
-        <div class="pagination">
-            
-            <a href="?page={{ posts.first_page}}">&lt;&nbsp; Первая страница</a>
-            
-            {% if posts.has_previous %}
-                <!-- Показывам кнопку со ссылкой, если есть предыдущая страница -->
-                <a href="?page={{ posts.previous_page_number}}">&lt;&nbsp; Предыдущая страница</a>
-            {% else %}
-                <!-- Показываем неактивную кнопку, если предыдущей страницы нет -->
-                <span>&lt;&nbsp; Предыдущая страница</span>
-            {% endif %}
-            
-            <!-- Прибавляем к номеру текущей страницы -4 (т.е. отнимаем 4) -->
-            {% if posts.number|add:'-4' > 0 %} 
-                <!-- Если до текущей страницы есть больше 4 страниц, показываем многоточие -->
-                <span class="ellipsis">...</span>
-            {% endif %}
-            
-            {% if posts.number|add:'-3' > 0 %}
-                <!-- Если до текущей страницы есть ещё три страницы -->
-                <a href="?page={{ posts.number|add:'-3'}}">{{ posts.number|add:'-3' }}</a>
-            {% endif %}
-            {% if posts.number|add:'-2' > 0 %}
-                <!-- Если до текущей страницы есть ещё две страницы -->
-                <a href="?page={{ posts.number|add:'-2'}}">{{ posts.number|add:'-2' }}</a>
-            {% endif %}
-            {% if posts.number|add:'-1' > 0 %}
-                <!-- Если до текущей страницы есть ещё одна страница -->
-                <a href="?page={{ posts.number|add:'-1'}}">{{ posts.number|add:'-1' }}</a>
-            {% endif %}
-            
-            <!-- Номер текущей страницы -->
-            <span>{{ posts.number }}</span>
-            
-            {% if posts.number|add:'1' <= posts.next_page_number %}
-                <!-- Если после текущей страницы есть ещё одна страница -->
-                <a href="?page={{ posts.number|add:'1'}}">{{ posts.number|add:'1' }}</a>
-            {% endif %}
-            {% if posts.number|add:'2' <= posts.next_page_number|add:'1' %}
-                <!-- Если после текущей страницы есть ещё две страницы -->
-                <a href="?page={{ posts.number|add:'2'}}">{{ posts.number|add:'2' }}</a>
-            {% endif %}
-            {% if posts.number|add:'3' <= posts.next_page_number|add:'2' %}
-                <!-- Если после текущей страницы есть ещё три страницы -->
-                <a href="?page={{ posts.number|add:'3'}}">{{ posts.number|add:'3' }}</a>
-            {% endif %}
-            
-            {% if posts.number|add:'4' <= posts.next_page_number|add:'3' %}
-                <!-- Если после текущей страницы есть ещё четыре страницы -->
-                <span class="ellipsis">...</span>
-            {% endif %}    
-            
-            {% if posts.has_next %}
-                <!-- Показывам кнопку со ссылкой, если есть следующая страница -->
-                <a href="?page={{ posts.next_page_number }}">Следующая страница &nbsp;&gt;</a>
-            {% else %}
-                <!-- Если нет следующей страницы -->
-                <span>Следующая страница &nbsp;&gt;</span>
-            {% endif %}
+    <div class="pagination">
 
-            <a href="?page={{ posts.page_number|add:'99999999' }}">Последняя страница &nbsp;&gt;</a>
-        </div>
-    </nav>
+        <a href="?page={{ posts.first_page}}">&lt;&nbsp; Первая страница</a>
+
+        {% if posts.has_previous %}
+            <!-- Показывам кнопку со ссылкой, если есть предыдущая страница -->
+            <a href="?page={{ posts.previous_page_number}}">&lt;&nbsp; Предыдущая страница</a>
+        {% else %}
+            <!-- Показываем неактивную кнопку, если предыдущей страницы нет -->
+            <span>&lt;&nbsp; Предыдущая страница</span>
+        {% endif %}
+        
+        <!-- Прибавляем к номеру текущей страницы -4 (т.е. отнимаем 4) -->
+        {% if posts.number|add:'-4' > 0 %} 
+            <!-- Если до текущей страницы есть больше 4 страниц, показываем многоточие -->
+            <span class="ellipsis">...</span>
+        {% endif %}
+        
+        {% if posts.number|add:'-3' > 0 %}
+            <!-- Если до текущей страницы есть ещё три страницы -->
+            <a href="?page={{ posts.number|add:'-3'}}">{{ posts.number|add:'-3' }}</a>
+        {% endif %}
+        {% if posts.number|add:'-2' > 0 %}
+            <!-- Если до текущей страницы есть ещё две страницы -->
+            <a href="?page={{ posts.number|add:'-2'}}">{{ posts.number|add:'-2' }}</a>
+        {% endif %}
+        {% if posts.number|add:'-1' > 0 %}
+            <!-- Если до текущей страницы есть ещё одна страница -->
+            <a href="?page={{ posts.number|add:'-1'}}">{{ posts.number|add:'-1' }}</a>
+        {% endif %}
+        
+        <!-- Номер текущей страницы -->
+        <span>{{ posts.number }}</span>
+        
+        {% if posts.number|add:'1' <= posts.next_page_number %}
+            <!-- Если после текущей страницы есть ещё одна страница -->
+            <a href="?page={{ posts.number|add:'1'}}">{{ posts.number|add:'1' }}</a>
+        {% endif %}
+        {% if posts.number|add:'2' <= posts.next_page_number|add:'1' %}
+            <!-- Если после текущей страницы есть ещё две страницы -->
+            <a href="?page={{ posts.number|add:'2'}}">{{ posts.number|add:'2' }}</a>
+        {% endif %}
+        {% if posts.number|add:'3' <= posts.next_page_number|add:'2' %}
+            <!-- Если после текущей страницы есть ещё три страницы -->
+            <a href="?page={{ posts.number|add:'3'}}">{{ posts.number|add:'3' }}</a>
+        {% endif %}
+        
+        {% if posts.number|add:'4' <= posts.next_page_number|add:'3' %}
+            <!-- Если после текущей страницы есть ещё четыре страницы -->
+            <span class="ellipsis">...</span>
+        {% endif %}    
+        
+        {% if posts.has_next %}
+            <!-- Показывам кнопку со ссылкой, если есть следующая страница -->
+            <a href="?page={{ posts.next_page_number }}">Следующая страница &nbsp;&gt;</a>
+        {% else %}
+            <span>Следующая страница &nbsp;&gt;</span>
+        {% endif %}
+
+        <a href="?page={{ last_page }}">Последняя страница &nbsp;&gt;</a>
+    </div>
+
 {% endblock %}
