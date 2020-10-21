@@ -17,10 +17,13 @@
         </div>   
         <div class="content container">
             {% if user.is_authenticated %}
-                <p>Hi {{ user.username }}!</p>
+                <p>Hi, {{ user.username }}</p>
                 <p><a href="{% url 'logout' %}">Log out</a></p>
+                {% if user.is_superuser %}
+                <p><a href="admin/">Панель администирования</a></p>
+                {% endif %}
             {% else %}
-                <p>You are not logged in.</p>
+                <p><a href="accounts/signup/">Registration</a></p>
                 <a href="{% url 'login' %}">Log In</a>
             {% endif %}
             <div class="row">

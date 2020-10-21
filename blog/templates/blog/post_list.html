@@ -6,12 +6,29 @@
         <div class="post">
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
             <p>{{ post.text| truncatechars:200 }}</p>
-            <div class="date">
-                {{ post.published_date }}, {{ post.author }}
+            <div class="date_and_author">
+                {{ post.published_date }}
             </div>
-        </div>
+            <div class="author">
+                {% if user.is_authenticated %}
+                    {% if user.id == post.author_id %}
+                        <a href="{% url 'dashboard' %}">{{ user.username }}</a>
+                    {% else %}
+                        {{ post.author }}
+                    {% endif %}
+                {% else %}
+                    {{ post.author }}
+                {% endif %}
+                <!--{% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}">{{ post.author }}</a>
+                {% else %}
+                    {{ post.author }}
+                {% endif %}
+            </div>
+        </div>-->
     {% endfor %}
 
+    <div id="footer">
     <div class="pagination">
 
         <a href="?page={{ posts.first_page}}">&lt;&nbsp; Первая страница</a>
@@ -46,20 +63,20 @@
         <!-- Номер текущей страницы -->
         <span>{{ posts.number }}</span>
         
-        {% if posts.number|add:'1' <= posts.next_page_number %}
+        {% if posts.number|add:'1' <= last_page %}
             <!-- Если после текущей страницы есть ещё одна страница -->
             <a href="?page={{ posts.number|add:'1'}}">{{ posts.number|add:'1' }}</a>
         {% endif %}
-        {% if posts.number|add:'2' <= posts.next_page_number|add:'1' %}
+        {% if posts.number|add:'2' <= last_page %}
             <!-- Если после текущей страницы есть ещё две страницы -->
             <a href="?page={{ posts.number|add:'2'}}">{{ posts.number|add:'2' }}</a>
         {% endif %}
-        {% if posts.number|add:'3' <= posts.next_page_number|add:'2' %}
+        {% if posts.number|add:'3' <= last_page %}
             <!-- Если после текущей страницы есть ещё три страницы -->
             <a href="?page={{ posts.number|add:'3'}}">{{ posts.number|add:'3' }}</a>
         {% endif %}
         
-        {% if posts.number|add:'4' <= posts.next_page_number|add:'3' %}
+        {% if posts.number|add:'4' <= last_page %}
             <!-- Если после текущей страницы есть ещё четыре страницы -->
             <span class="ellipsis">...</span>
         {% endif %}    
@@ -72,6 +89,7 @@
         {% endif %}
 
         <a href="?page={{ last_page }}">Последняя страница &nbsp;&gt;</a>
+    </div>
     </div>
 
 {% endblock %}
