@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 from blog.models import Post
+from django.utils import timezone
 
 
 class SignUpView(generic.CreateView):
@@ -12,18 +13,20 @@ class SignUpView(generic.CreateView):
     template_name = 'signup.html'
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    last_posts = Post.objects.filter(author_id = request.user).order_by('-published_date')[:5]
+    return render(request, 'dashboard.html', {'last_posts' : last_posts})
 
-"""def dashboard_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect('post_detail', pk=post.pk)
+"""def dashboard_edit(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = ProfileForm(request.POST, instance=userprofile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save(commit=False)
+            profile_form.save(commit=False)
+            user.save()
+            userprofile.save()
+            return redirect('dashboard')
     else:
-        form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form})"""
+        user_form = UserForm(instance=user)
+        profile_form = ProfileForm(instance=userprofile)
+    return render(request, 'dashboard_edit.html', {'user_form': user_form, 'profile_form': profile_form})"""

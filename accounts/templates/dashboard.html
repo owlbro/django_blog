@@ -1,9 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>FFFKndlksfbaldjhsbhf;akdsf;aowiehfluyawegvbp</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+<h1>Профиль пользователя: {{ user.username}}</h1>
+
+<h3><div class="information">
+    <ol>
+        <li>{{ user.first_name }}</li>
+        <li>{{ user.last_name }}</li>
+        <!--<li>{{ userprofile.patronymic }}</li>-->
+        <li>{{ user.email }}</li>
+        <!--<li>{{ userprofile.phone_number }}</li>-->
+        <li>Последние 5 постов:
+            <ul>{% for post in last_posts %}
+                <li>
+                    <p><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></p>
+                    <p>{{ post.published_date}}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ol>
+</div></h3>
+
+{% csrf_token %} 
     
 {% endblock content %}
+<!--<a class="btn btn-default" href="{% url 'dashboard_edit' %}"><span class="glyphicon glyphicon-pencil"></span></a>-->

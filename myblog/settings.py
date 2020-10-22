@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'accounts.apps.AccountsConfig',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # blog_project/settings.py
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'post_list'
+#AUTH_PROFILE_MODULE = 'accounts.UserProfile'
