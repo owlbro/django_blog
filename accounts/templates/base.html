@@ -14,24 +14,25 @@
                 <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
             {% endif %}
             <h1><a href="/">Блог по вахе</a></h1>
-        </div>   
-        <div class="content container">
             {% if user.is_authenticated %}
-                <p>Hi, {{ user.username }}!</p>
+                <h4><p>Hi, <a href="{% url 'dashboard' %}">{{ user.last_name }} {{ user.first_name }} {{ user.profile.patronymic }}</a>!</p>
                 <p><a href="{% url 'logout' %}">Log out</a></p>
-                {% if user.is_superuser %}
-                    <p><a href="http://127.0.0.1:8000/admin/">Панель администирования</a></p>
+            {% if user.is_superuser %}
+                <p><a href="http://127.0.0.1:8000/admin/">Панель администирования</a></p>
                 {% endif %}
             {% else %}
-                <p>You are not logged in.</p>
+                <p><a href="accounts/signup/">Registration</a></p>
                 <a href="{% url 'login' %}">Log In</a>
-            {% endif %}
+            {% endif %}</h4>
+        </div>   
+        <h4><div class="content container">
+            
             <div class="row">
                 <div class="col-md-8">
                 {% block content %}
                 {% endblock %}
                 </div>
             </div>
-        </div>
+        </div></h4>
     </body>
 </html>
