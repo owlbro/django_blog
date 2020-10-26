@@ -1,21 +1,23 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.utils import timezone
 from .models import Post
 from .forms import PostForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .schema import PostSchema
 
 
-def post_list(request):
-    posts = Post.objects.all().order_by('title')
-    paginator = Paginator(posts, 5)
-    page = request.GET.get('page')
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-    return render(request, 'blog/post_list.html', {'page': page, 'posts': posts, 'last_page': paginator.num_pages})
+
+
+
+
+class PostView(APIView):
+    def get(self, request):
+        posts = Post.objects.all().order_by('title')
+        schema = PostSchema(many = True)
+        json_result = schema.dumps(posts)
+        return Response({'posts': json_result})
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)

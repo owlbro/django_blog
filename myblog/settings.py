@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'accounts.apps.AccountsConfig',
     'phonenumber_field',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
