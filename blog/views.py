@@ -19,9 +19,11 @@ class PostView(APIView):
         json_result = schema.dumps(posts)
         return Response({'posts': json_result})
 
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    def get(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        schema = PostSchema()
+        result = schema.dump(post)
+        return Response({'post': result})
 
 def post_new(request):
     if request.method == "POST":
